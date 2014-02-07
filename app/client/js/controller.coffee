@@ -2,11 +2,13 @@ class FL.Controller
 	constructor: ->
 		@$dom = $('#controller')
 
-		size = FL.app.stage.size()
-		@$dom.width size.width
-		@$dom.height size.height
+		@width = 100
+		@height = 100
 
-		@max_velocity = 0.2
+		@$dom.width @width
+		@$dom.height @height
+
+		@max_velocity = 0.3
 		@velocity = { x: 0, y: 0 }
 
 		@init_anchor()
@@ -15,11 +17,9 @@ class FL.Controller
 	init_anchor: ->
 		@$anchor = @$dom.find('.anchor')
 
-		size = FL.app.stage.size()
-
 		@$anchor.css {
-			marginLeft: (size.width - @$anchor.width()) / 2
-			marginTop: (size.height - @$anchor.height()) / 2
+			marginLeft: (@width - @$anchor.width()) / 2
+			marginTop: (@height - @$anchor.height()) / 2
 		}
 
 	init_mouse_interaction: ->
