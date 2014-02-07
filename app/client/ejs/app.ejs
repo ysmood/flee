@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<?= head ?>
+
+	<?= css(class_name) ?>
+
+	<script type="text/javascript">
+		// Main namespace.
+		var FL = {}
+	</script>
+
+	<title><?- _.l('Flee') ?></title>
+</head>
+<body>
+
+	<div id="main">
+		<canvas id='stage'></canvas>
+	</div>
+
+	<?= foot ?>
+
+	<?= js(
+		'app',
+		'renderer',
+		'stage',
+		'shuttle'
+	) ?>
+
+	<script type="text/javascript">
+
+		FL.app = new FL.App();
+
+	</script>
+
+</body>
+</html>
