@@ -16,6 +16,10 @@
 
 	<div id="main">
 		<canvas id='stage'></canvas>
+
+		<div id="controller">
+			<div class="anchor"></div>
+		</div>
 	</div>
 
 	<?= foot ?>
@@ -24,12 +28,13 @@
 		'app',
 		'renderer',
 		'stage',
-		'shuttle'
+		'shuttle',
+		'controller'
 	) ?>
 
 	<script type="text/javascript">
 
-		FL.app = new FL.App();
+		new FL.App();
 
 	</script>
 

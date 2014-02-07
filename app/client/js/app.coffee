@@ -1,9 +1,12 @@
 
 class FL.App
 	constructor: ->
+		FL.app = @
+
 		@init_stage()
 		@init_renderer()
 		@init_shuttle()
+		@init_controller()
 		@launch()
 
 	init_stage: ->
@@ -16,9 +19,15 @@ class FL.App
 		@shuttle = new FL.Shuttle
 		@stage.add_child @shuttle
 
-	frame_tick: =>
+	init_controller: ->
+		@controller = new FL.Controller
+
+	update: =>
+		@shuttle.update()
+
 		@renderer.render()
-		requestAnimationFrame @frame_tick
+
+		requestAnimationFrame @update
 
 	launch: ->
-		requestAnimationFrame @frame_tick
+		requestAnimationFrame @update
