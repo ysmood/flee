@@ -6,7 +6,8 @@ class FL.Ammo
 		@_color = 'red'
 
 	random_props: ->
-		x = _.random(1) * FL.app.stage.width
+		rand = _.random(1)
+		x = rand * FL.app.stage.width + @radius * 2 * (rand - 0.5)
 		y = Math.random() * FL.app.stage.height
 
 		# position

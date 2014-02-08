@@ -7,7 +7,7 @@ class FL.App
 		@init_renderer()
 		@init_controller()
 		@init_shuttle()
-		@init_bullet_system()
+		@init_ammo_system()
 		@init_display()
 		@launch()
 
@@ -21,10 +21,17 @@ class FL.App
 		@shuttle = new FL.Shuttle
 		@stage.add_child @shuttle
 
-	init_bullet_system: ->
+	init_ammo_system: ->
 		for i in [0..50]
-			@ammo = new FL.Ammo
-			@stage.add_child @ammo
+			@stage.add_child new FL.Ammo
+
+		setInterval(
+			=>
+				n = 50 - @stage.children.length
+				return if n <= 0
+				for i in [0..n]
+					@stage.add_child new FL.Ammo
+		1000)
 
 	init_controller: ->
 		@controller = new FL.Controller
