@@ -44,8 +44,8 @@ class FL.Ammo
 			[@x, @y, @radius, 0, 2 * Math.PI]
 
 	check_bound: ->
-		if @x < 0 or
-		@x > FL.app.stage.width or
-		@y < 0 or
-		@y > FL.app.stage.height
+		if @x < -@radius or
+		@x > FL.app.stage.width + @radius or
+		@y < -@radius or
+		@y > FL.app.stage.height + @radius
 			@is_die = true
