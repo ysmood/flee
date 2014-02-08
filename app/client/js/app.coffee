@@ -5,8 +5,8 @@ class FL.App
 
 		@init_stage()
 		@init_renderer()
-		@init_shuttle()
 		@init_controller()
+		@init_shuttle()
 		@init_display()
 		@launch()
 
@@ -28,6 +28,8 @@ class FL.App
 		@update_fps = _.throttle @update_fps, 500
 
 	update_timestamp: ->
+		@last_timestamp ?= Date.now()
+
 		now = Date.now()
 		@time_delta = (now - @last_timestamp) / 1000
 		@last_timestamp = now
@@ -38,14 +40,15 @@ class FL.App
 	update: =>
 		@update_timestamp()
 
-		@update_fps()
+		@controller.update()
 
 		@shuttle.update()
+
+		@update_fps()
 
 		@renderer.render()
 
 		requestAnimationFrame @update
 
 	launch: ->
-		@last_timestamp = Date.now()
 		requestAnimationFrame @update
