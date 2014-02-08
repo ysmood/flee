@@ -6,28 +6,21 @@ class FL.Ammo
 		@_color = 'red'
 
 	random_props: ->
+		x = _.random(1) * FL.app.stage.width
+		y = Math.random() * FL.app.stage.height
+
+		# position
+		[@x, @y] = [x, y]
+
+		# velocity
+		@velocity = {
+			x: (if @x > 0 then -1 else 1) * Math.random() * @base_velocity
+			y: (2 * Math.random() - 1) * @base_velocity
+		}
+
 		if _.random(1)
-			# position
-			[@x, @y] = [
-				_.random(1) * FL.app.stage.width
-				Math.random() * FL.app.stage.height
-			]
-
-			# velocity
-			@velocity = {
-				x: (if @x > 0 then -1 else 1) * Math.random() * @base_velocity
-				y: (2 * Math.random() - 1) * @base_velocity
-			}
-		else
-			[@x, @y] = [
-				Math.random() * FL.app.stage.height
-				_.random(1) * FL.app.stage.width
-			]
-
-			@velocity = {
-				x: (2 * Math.random() - 1) * @base_velocity
-				y: (if @y > 0 then -1 else 1) * Math.random() * @base_velocity
-			}
+			[@x, @y] = [@y, @x]
+			[@velocity.x, @velocity.y] = [@velocity.y, @velocity.x]
 
 	type: ->
 		'circle'
