@@ -7,6 +7,7 @@ class FL.App
 		@init_renderer()
 		@init_controller()
 		@init_shuttle()
+		@init_bullet_system()
 		@init_display()
 		@launch()
 
@@ -20,12 +21,21 @@ class FL.App
 		@shuttle = new FL.Shuttle
 		@stage.add_child @shuttle
 
+	init_bullet_system: ->
+		for i in [0..50]
+			@ammo = new FL.Ammo
+			@stage.add_child @ammo
+
 	init_controller: ->
 		@controller = new FL.Controller
 
 	init_display: ->
 		@$fps = $('#display .fps')
+		@$time = $('#display .time')
 		@update_fps = _.throttle @update_fps, 500
+
+		@start_time = Date.now()
+		setInterval(@update_time, 100)
 
 	update_timestamp: ->
 		@last_timestamp ?= Date.now()
@@ -37,12 +47,17 @@ class FL.App
 	update_fps: ->
 		@$fps.text _.numberFormat(1 / @time_delta, 2)
 
+	update_time: =>
+		@$time.text _.numberFormat(
+			(Date.now() - @start_time) / 1000, 2
+		)
+
 	update: =>
 		@update_timestamp()
 
 		@controller.update()
 
-		@shuttle.update()
+		@stage.update()
 
 		@update_fps()
 

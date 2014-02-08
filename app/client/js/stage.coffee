@@ -11,6 +11,16 @@ class FL.Stage
 
 		@children = []
 
+	update: ->
+		# All dead children will be removed from the stage.
+		list = []
+		for el in @children
+			if not el.is_die
+				list.push el
+				el.update()
+
+		@children = list
+
 	size: ->
 		{
 			width: @width
