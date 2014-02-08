@@ -7,6 +7,7 @@ class FL.App
 		@init_renderer()
 		@init_shuttle()
 		@init_controller()
+		@init_display()
 		@launch()
 
 	init_stage: ->
@@ -22,7 +23,23 @@ class FL.App
 	init_controller: ->
 		@controller = new FL.Controller
 
+	init_display: ->
+		@$fps = $('#display .fps')
+		@update_fps = _.throttle @update_fps, 500
+
+	update_timestamp: ->
+		now = Date.now()
+		@time_delta = (now - @last_timestamp) / 1000
+		@last_timestamp = now
+
+	update_fps: ->
+		@$fps.text _.numberFormat(1 / @time_delta, 2)
+
 	update: =>
+		@update_timestamp()
+
+		@update_fps()
+
 		@shuttle.update()
 
 		@renderer.render()
@@ -30,4 +47,5 @@ class FL.App
 		requestAnimationFrame @update
 
 	launch: ->
+		@last_timestamp = Date.now()
 		requestAnimationFrame @update

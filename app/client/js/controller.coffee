@@ -8,7 +8,9 @@ class FL.Controller
 		@$dom.width @width
 		@$dom.height @height
 
-		@max_velocity = 0.3
+		# pixel per second.
+		@max_velocity = 30
+
 		@velocity = { x: 0, y: 0 }
 
 		@init_anchor()
@@ -18,8 +20,8 @@ class FL.Controller
 		@$anchor = @$dom.find('.anchor')
 
 		@$anchor.css {
-			marginLeft: (@width - @$anchor.width()) / 2
-			marginTop: (@height - @$anchor.height()) / 2
+			top: (@width - @$anchor.width()) / 2
+			left: (@height - @$anchor.height()) / 2
 		}
 
 	init_mouse_interaction: ->

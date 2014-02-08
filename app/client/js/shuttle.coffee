@@ -11,8 +11,8 @@ class FL.Shuttle
 		'circle'
 
 	update: ->
-		@x += FL.app.controller.velocity.x
-		@y += FL.app.controller.velocity.y
+		@x += FL.app.controller.velocity.x * FL.app.time_delta
+		@y += FL.app.controller.velocity.y * FL.app.time_delta
 
 		@check_bound()
 
