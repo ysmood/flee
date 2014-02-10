@@ -14,7 +14,7 @@ class FL.Controller
 		@init_mouse_interaction()
 
 	reset: ->
-		@mouse_pos = { left: @width / 2, top: @height / 2 }
+		@mouse_pos = { x: @width / 2, y: @height / 2 }
 		@velocity = { x: 0, y: 0 }
 
 	draw_anchor: ->
@@ -27,7 +27,7 @@ class FL.Controller
 	draw_indicator: ->
 		@ctx.fillStyle = '#9ebbff'
 		@ctx.beginPath()
-		@ctx.arc(@mouse_pos.left, @mouse_pos.top, @width * 0.05, 0, 2 * Math.PI)
+		@ctx.arc(@mouse_pos.x, @mouse_pos.y, @width * 0.05, 0, 2 * Math.PI)
 		@ctx.fill()
 		@ctx.closePath()
 
@@ -43,15 +43,15 @@ class FL.Controller
 				x = e.originalEvent.touches[0].pageX
 				y = e.originalEvent.touches[0].pageY
 				offset = @$dom.offset()
-				@mouse_pos.left = x - offset.left
-				@mouse_pos.top = y - offset.top
+				@mouse_pos.x = x - offset.x
+				@mouse_pos.y = y - offset.y
 			else
-				@mouse_pos.left = e.offsetX
-				@mouse_pos.top = e.offsetY
+				@mouse_pos.x = e.offsetX
+				@mouse_pos.y = e.offsetY
 
 			@velocity = {
-				x: (@mouse_pos.left / @width * 2 - 1) * @max_velocity
-				y: (@mouse_pos.top / @height * 2 - 1) * @max_velocity
+				x: (@mouse_pos.x / @width * 2 - 1) * @max_velocity
+				y: (@mouse_pos.y / @height * 2 - 1) * @max_velocity
 			}
 
 			e.preventDefault()

@@ -1,7 +1,8 @@
 class FL.Ammo
 	constructor: ->
 		@radius = 10
-		@base_velocity = 100
+		@base_velocity = 80
+		@pursuit_ratio = 0.2
 		@random_props()
 		@_color = 'red'
 
@@ -25,6 +26,14 @@ class FL.Ammo
 		if _.random(1)
 			[@x, @y] = [@y, @x]
 			[@velocity.x, @velocity.y] = [@velocity.y, @velocity.x]
+
+		# pursuit the shuttle.
+		offset = _.pt_sum(
+			_.pt_sum(FL.app.shuttle, @, -1)
+			@velocity
+		-1)
+		offset = _.pt_scale(offset, @pursuit_ratio)
+		@velocity = _.pt_sum(@velocity, offset)
 
 	type: ->
 		'circle'

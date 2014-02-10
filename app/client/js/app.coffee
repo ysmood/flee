@@ -23,7 +23,7 @@ class FL.App
 		@stage.add_child @shuttle
 
 	init_ammo_system: ->
-		num = 36
+		num = 32
 
 		setInterval(
 			=>
@@ -62,19 +62,11 @@ class FL.App
 			(Date.now() - @start_time) / 1000, 2
 		)
 
-	distance: (point_a, point_b) ->
-		offset = {
-			x: point_a.x - point_b.x
-			y: point_a.y - point_b.y
-		}
-
-		Math.sqrt(offset.x * offset.x + offset.y * offset.y)
-
 	collision_test: ->
 		for el in @stage.children
 			continue if el instanceof FL.Shuttle
 
-			d = @distance(el, @shuttle)
+			d = _.distance(el, @shuttle)
 			if d < el.radius + @shuttle.radius
 				@stop()
 				_.info_box({info: 'die'})

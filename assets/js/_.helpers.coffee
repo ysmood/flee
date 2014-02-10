@@ -81,9 +81,19 @@ _.mixin(
 		###
 
 		return {
-			left: (point_a.left or 0) + (point_b.left or 0) * direction
-			top: (point_a.top or 0) + (point_b.top or 0) * direction
+			x: point_a.x + point_b.x * direction
+			y: point_a.y + point_b.y * direction
 		}
+
+	pt_scale: (point, scale) ->
+		return {
+			x: point.x * scale
+			y: point.y * scale
+		}
+
+	distance: (point_a, point_b) ->
+		offset = _.pt_sum(point_a, point_b, -1)
+		Math.sqrt(offset.x * offset.x + offset.y * offset.y)
 
 	get_img_size: (url, done) ->
 		###
