@@ -20,4 +20,4 @@ class FL.Renderer
 		return
 
 	clear_stage: ->
-		@stage.dom.width = @stage.dom.width
+		@ctx.clearRect(0, 0, FL.app.stage.width, FL.app.stage.height)

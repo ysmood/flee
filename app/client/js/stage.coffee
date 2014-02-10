@@ -1,7 +1,8 @@
 class FL.Stage
 	constructor: ->
-		@width = 600
-		@height = 600
+		$main = $('#main')
+		@width = $main.width()
+		@height = @width
 
 		@$dom = $('#stage')
 		@dom = @$dom[0]

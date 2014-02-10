@@ -3,6 +3,7 @@ class FL.App
 	constructor: ->
 		FL.app = @
 
+		@init_size()
 		@init_stage()
 		@init_renderer()
 		@init_controller()
@@ -11,6 +12,19 @@ class FL.App
 		@init_display()
 
 		@controller.$dom.one 'click', @start
+
+	init_size: ->
+		$win = $(window)
+		$main = $('#main')
+		w = $win.width()
+		h = $win.height()
+
+		if w / h > 1
+			$main.height h
+			$main.width Math.floor(h * 2 / 3)
+		else
+			$main.width w
+			$main.height h
 
 	init_stage: ->
 		@stage = new FL.Stage

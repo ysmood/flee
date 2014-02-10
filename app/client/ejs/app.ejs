@@ -5,6 +5,8 @@
 
 	<?= css(class_name) ?>
 
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+
 	<script type="text/javascript">
 		// Main namespace.
 		var FL = {}
@@ -19,14 +21,14 @@
 
 		<canvas id="controller"></canvas>
 
-		<div id="display">
+		<div id="display" class="font-20 hide">
 			<div>
-				FPS:
-				<span class='fps'></span>
+				<i class='fa fa-dashboard'></i>
+				<span class='fps'>0.00</span>
 			</div>
 			<div>
-				Time:
-				<span class='time'></span>
+				<i class='fa fa-clock-o'></i>
+				<span class='time'>0.00</span>
 			</div>
 		</div>
 	</div>

@@ -3,8 +3,10 @@ class FL.Controller
 		@$dom = $('#controller')
 		@ctx = @$dom[0].getContext('2d')
 
-		@width = FL.app.stage.width / 2
-		@height = FL.app.stage.height / 2
+		$main = $('#main')
+
+		@height = $main.height() - FL.app.stage.height
+		@width = @height
 
 		@$dom[0].width = @width
 		@$dom[0].height = @height
@@ -34,7 +36,7 @@ class FL.Controller
 		@ctx.closePath()
 
 	update: ->
-		@$dom[0].width = @$dom[0].width
+		@ctx.clearRect(0, 0, @width, @height)
 
 		@draw_anchor()
 		@draw_indicator()
@@ -45,8 +47,8 @@ class FL.Controller
 				x = e.originalEvent.touches[0].pageX
 				y = e.originalEvent.touches[0].pageY
 				offset = @$dom.offset()
-				@mouse_pos.x = x - offset.x
-				@mouse_pos.y = y - offset.y
+				@mouse_pos.x = x - offset.left
+				@mouse_pos.y = y - offset.top
 			else
 				@mouse_pos.x = e.offsetX
 				@mouse_pos.y = e.offsetY
@@ -63,6 +65,10 @@ class FL.Controller
 		# Check devices.
 		if /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 			@$dom.on 'touchmove', move
+
+			# Prevent the document to scroll.
+			document.ontouchmove = (e) ->
+				e.preventDefault()
 		else
 			@$dom.mousemove move
 
