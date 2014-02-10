@@ -11,8 +11,6 @@ class FL.App
 		@init_ammo_system()
 		@init_display()
 
-		@controller.$dom.one 'click', @start
-
 	init_size: ->
 		$win = $(window)
 		$main = $('#main')
@@ -28,7 +26,7 @@ class FL.App
 
 	init_stage: ->
 		@stage = new FL.Stage
-		$('#game-over').css({ top: @stage.height / 2 })
+		$('#stage-info').css({ height: @stage.height })
 
 	init_renderer: ->
 		@renderer = new FL.Renderer @stage
@@ -53,12 +51,14 @@ class FL.App
 
 	init_controller: ->
 		@controller = new FL.Controller
+		$('#controller-info').css({
+			height: @controller.height
+			'line-height': @controller.height + 'px'
+		}).click @start
 
 	init_display: ->
 		$('#display').css({ top: - @controller.height })
-		@$fps = $('#display .fps')
 		@$time = $('#display .time')
-		@update_fps = _.throttle @update_fps, 500
 
 		w = $(window).width()
 		if w < 500
@@ -72,10 +72,6 @@ class FL.App
 		now = Date.now()
 		@time_delta = (now - @last_timestamp) / 1000
 		@last_timestamp = now
-
-	update_fps: ->
-		return if @time_delta == 0
-		@$fps.text _.numberFormat(1 / @time_delta, 2) + 'fps'
 
 	update_timer: =>
 		if @is_stop
@@ -93,14 +89,14 @@ class FL.App
 			d = _.distance(el, @shuttle)
 			if d < el.radius + @shuttle.radius
 				@stop()
-				$('#game-over').removeClass('hide')
+				$('#stage-info, #controller-info').removeClass('hide')
 
 	stop: ->
 		@is_stop = true
 		@controller.$dom.one 'click', @start
 
 	start: =>
-		$('#game-over').addClass('hide')
+		$('#stage-info, #controller-info').addClass('hide')
 		@is_stop = false
 
 		@start_time = Date.now()
@@ -121,8 +117,6 @@ class FL.App
 		@controller.update()
 
 		@stage.update()
-
-		@update_fps()
 
 		@renderer.render()
 
