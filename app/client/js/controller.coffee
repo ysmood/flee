@@ -11,7 +11,7 @@ class FL.Controller
 		@$dom[0].width = @width
 		@$dom[0].height = @height
 
-		@max_velocity = FL.app.stage.width * 0.3
+		@max_velocity = FL.app.stage.width * 0.6
 
 		@reset()
 
@@ -53,10 +53,10 @@ class FL.Controller
 				@mouse_pos.x = e.offsetX
 				@mouse_pos.y = e.offsetY
 
-			@velocity = _.normalize_vector {
-				x: (@mouse_pos.x / @width * 2 - 1)
-				y: (@mouse_pos.y / @height * 2 - 1)
-			}, @max_velocity
+			@velocity = {
+				x: (@mouse_pos.x / @width * 2 - 1) * @max_velocity
+				y: (@mouse_pos.y / @height * 2 - 1) * @max_velocity
+			}
 
 			e.preventDefault()
 
