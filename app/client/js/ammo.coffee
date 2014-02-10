@@ -2,7 +2,6 @@ class FL.Ammo
 	constructor: ->
 		@radius = 10
 		@base_velocity = 80
-		@pursuit_ratio = 0.2
 		@random_props()
 		@_color = 'red'
 
@@ -11,7 +10,7 @@ class FL.Ammo
 
 	random_props: ->
 		rand = _.random(1)
-		x = rand * FL.app.stage.width + @radius * 2 * (rand - 0.5)
+		x = rand * FL.app.stage.width + @radius * (rand - 0.5)
 		y = Math.random() * FL.app.stage.height
 
 		# position
@@ -19,8 +18,8 @@ class FL.Ammo
 
 		# velocity
 		@velocity = {
-			x: (if @x > 0 then -1 else 1) * @random(0.5, 1) * @base_velocity
-			y: (2 * @random(0.5, 1) - 1) * @base_velocity
+			x: (if @x > 0 then -1 else 1) * @random(0.3, 1) * @base_velocity
+			y: (2 * @random(0.3, 1) - 1) * @base_velocity
 		}
 
 		if _.random(1)
@@ -32,7 +31,7 @@ class FL.Ammo
 			_.pt_sum(FL.app.shuttle, @, -1)
 			@velocity
 		-1)
-		offset = _.pt_scale(offset, @pursuit_ratio)
+		offset = _.pt_scale(offset, @random(0.3, 0.6))
 		@velocity = _.pt_sum(@velocity, offset)
 
 	type: ->

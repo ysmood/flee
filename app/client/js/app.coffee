@@ -10,7 +10,7 @@ class FL.App
 		@init_ammo_system()
 		@init_display()
 
-		@start()
+		@controller.$dom.one 'click', @start
 
 	init_stage: ->
 		@stage = new FL.Stage
@@ -44,9 +44,6 @@ class FL.App
 		@$time = $('#display .time')
 		@update_fps = _.throttle @update_fps, 500
 
-		@start_time = Date.now()
-		setInterval(@update_time, 100)
-
 	update_timestamp: ->
 		@last_timestamp ?= Date.now()
 
@@ -57,7 +54,11 @@ class FL.App
 	update_fps: ->
 		@$fps.text _.numberFormat(1 / @time_delta, 2)
 
-	update_time: =>
+	update_timer: =>
+		if @is_stop
+			clearInterval @timer
+			return
+
 		@$time.text _.numberFormat(
 			(Date.now() - @start_time) / 1000, 2
 		)
@@ -73,9 +74,13 @@ class FL.App
 
 	stop: ->
 		@is_stop = true
+		@controller.$dom.one 'click', @start
 
-	start: ->
+	start: =>
 		@is_stop = false
+
+		@start_time = Date.now()
+		@timer = setInterval(@update_timer, 100)
 
 		@controller.reset()
 		@shuttle.reset()

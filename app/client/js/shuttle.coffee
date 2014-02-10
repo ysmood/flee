@@ -2,6 +2,7 @@ class FL.Shuttle
 	constructor: ->
 		@_color = '#333'
 		@radius = 10
+		@reset()
 
 	reset: ->
 		[@x, @y] = [

@@ -11,6 +11,8 @@ class FL.Controller
 
 		@max_velocity = 500
 
+		@reset()
+
 		@init_mouse_interaction()
 
 	reset: ->
