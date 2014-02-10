@@ -3,13 +3,13 @@ class FL.Controller
 		@$dom = $('#controller')
 		@ctx = @$dom[0].getContext('2d')
 
-		@width = 300
-		@height = 300
+		@width = FL.app.stage.width / 2
+		@height = FL.app.stage.height / 2
 
 		@$dom[0].width = @width
 		@$dom[0].height = @height
 
-		@max_velocity = 500
+		@max_velocity = FL.app.stage.width * 0.6
 
 		@reset()
 
