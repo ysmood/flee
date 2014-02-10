@@ -5,6 +5,9 @@ class FL.Ammo
 		@random_props()
 		@_color = 'red'
 
+	random: (max, min) ->
+		Math.random() * (max - min) + min
+
 	random_props: ->
 		rand = _.random(1)
 		x = rand * FL.app.stage.width + @radius * 2 * (rand - 0.5)
@@ -15,8 +18,8 @@ class FL.Ammo
 
 		# velocity
 		@velocity = {
-			x: (if @x > 0 then -1 else 1) * Math.random() * @base_velocity
-			y: (2 * Math.random() - 1) * @base_velocity
+			x: (if @x > 0 then -1 else 1) * @random(0.5, 1) * @base_velocity
+			y: (2 * @random(0.5, 1) - 1) * @base_velocity
 		}
 
 		if _.random(1)
