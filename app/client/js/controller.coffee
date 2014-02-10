@@ -9,11 +9,13 @@ class FL.Controller
 		@$dom[0].width = @width
 		@$dom[0].height = @height
 
-		@mouse_pos = { left: 0, top: 0 }
 		@max_velocity = 500
-		@velocity = { x: 0, y: 0 }
 
 		@init_mouse_interaction()
+
+	reset: ->
+		@mouse_pos = { left: @width / 2, top: @height / 2 }
+		@velocity = { x: 0, y: 0 }
 
 	draw_anchor: ->
 		@ctx.fillStyle = '#fff'

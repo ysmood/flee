@@ -9,7 +9,8 @@ class FL.App
 		@init_shuttle()
 		@init_ammo_system()
 		@init_display()
-		@launch()
+
+		@start()
 
 	init_stage: ->
 		@stage = new FL.Stage
@@ -22,16 +23,18 @@ class FL.App
 		@stage.add_child @shuttle
 
 	init_ammo_system: ->
-		for i in [0..50]
-			@stage.add_child new FL.Ammo
+		num = 36
 
 		setInterval(
 			=>
-				n = 50 - @stage.children.length
+				n = num - @stage.children.length
 				return if n <= 0
 				for i in [0..n]
 					@stage.add_child new FL.Ammo
 		1000)
+
+	clear_ammos: ->
+		@stage.children = [@shuttle]
 
 	init_controller: ->
 		@controller = new FL.Controller
@@ -59,7 +62,39 @@ class FL.App
 			(Date.now() - @start_time) / 1000, 2
 		)
 
+	distance: (point_a, point_b) ->
+		offset = {
+			x: point_a.x - point_b.x
+			y: point_a.y - point_b.y
+		}
+
+		Math.sqrt(offset.x * offset.x + offset.y * offset.y)
+
+	collision_test: ->
+		for el in @stage.children
+			continue if el instanceof FL.Shuttle
+
+			d = @distance(el, @shuttle)
+			if d < el.radius + @shuttle.radius
+				@stop()
+				_.info_box({info: 'die'})
+
+	stop: ->
+		@is_stop = true
+
+	start: ->
+		@is_stop = false
+
+		@controller.reset()
+		@shuttle.reset()
+		@clear_ammos()
+
+		requestAnimationFrame @update
+
 	update: =>
+		if @is_stop
+			return
+
 		@update_timestamp()
 
 		@controller.update()
@@ -70,7 +105,6 @@ class FL.App
 
 		@renderer.render()
 
-		requestAnimationFrame @update
+		@collision_test()
 
-	launch: ->
 		requestAnimationFrame @update

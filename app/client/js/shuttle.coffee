@@ -1,11 +1,13 @@
 class FL.Shuttle
 	constructor: ->
-		[@x, @y, @radius] = [
+		@_color = '#333'
+		@radius = 10
+
+	reset: ->
+		[@x, @y] = [
 			FL.app.stage.width / 2
 			FL.app.stage.height / 2
-			5
 		]
-		@_color = '#333'
 
 	type: ->
 		'circle'

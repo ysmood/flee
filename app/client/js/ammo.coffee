@@ -1,6 +1,6 @@
 class FL.Ammo
 	constructor: ->
-		@radius = 5
+		@radius = 10
 		@base_velocity = 100
 		@random_props()
 		@_color = 'red'
