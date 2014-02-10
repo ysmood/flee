@@ -1,9 +1,9 @@
 class FL.Ammo
 	constructor: ->
-		@radius = FL.app.stage.width * 0.02
+		@radius = FL.app.stage.width * 0.015
 		@base_velocity = FL.app.stage.width * 0.1
 		@random_props()
-		@_color = 'red'
+		@_color = '#f5d83d'
 
 	random: (max, min) ->
 		Math.random() * (max - min) + min

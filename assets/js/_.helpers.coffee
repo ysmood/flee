@@ -95,6 +95,10 @@ _.mixin(
 		offset = _.pt_sum(point_a, point_b, -1)
 		Math.sqrt(offset.x * offset.x + offset.y * offset.y)
 
+	normalize_vector: (v, unit = 1) ->
+		a = _.distance(v, { x: 0, y: 0 })
+		{ x: v.x / a * unit, y: v.y / a * unit }
+
 	get_img_size: (url, done) ->
 		###
 			done = ({width, height}) ->

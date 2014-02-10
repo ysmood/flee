@@ -28,6 +28,7 @@ class FL.App
 
 	init_stage: ->
 		@stage = new FL.Stage
+		$('#game-over').css({ top: @stage.height / 2 })
 
 	init_renderer: ->
 		@renderer = new FL.Renderer @stage
@@ -54,9 +55,16 @@ class FL.App
 		@controller = new FL.Controller
 
 	init_display: ->
+		$('#display').css({ top: - @controller.height })
 		@$fps = $('#display .fps')
 		@$time = $('#display .time')
 		@update_fps = _.throttle @update_fps, 500
+
+		w = $(window).width()
+		if w < 500
+			$('#display').addClass('small')
+		else
+			$('#display').addClass('large')
 
 	update_timestamp: ->
 		@last_timestamp ?= Date.now()
@@ -66,7 +74,8 @@ class FL.App
 		@last_timestamp = now
 
 	update_fps: ->
-		@$fps.text _.numberFormat(1 / @time_delta, 2)
+		return if @time_delta == 0
+		@$fps.text _.numberFormat(1 / @time_delta, 2) + 'fps'
 
 	update_timer: =>
 		if @is_stop
@@ -75,7 +84,7 @@ class FL.App
 
 		@$time.text _.numberFormat(
 			(Date.now() - @start_time) / 1000, 2
-		)
+		) + 's'
 
 	collision_test: ->
 		for el in @stage.children
@@ -84,13 +93,14 @@ class FL.App
 			d = _.distance(el, @shuttle)
 			if d < el.radius + @shuttle.radius
 				@stop()
-				_.info_box({info: 'die'})
+				$('#game-over').removeClass('hide')
 
 	stop: ->
 		@is_stop = true
 		@controller.$dom.one 'click', @start
 
 	start: =>
+		$('#game-over').addClass('hide')
 		@is_stop = false
 
 		@start_time = Date.now()

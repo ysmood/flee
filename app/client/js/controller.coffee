@@ -42,7 +42,7 @@ class FL.Controller
 		@draw_indicator()
 
 	init_mouse_interaction: ->
-		move = (e) =>
+		move = _.throttle((e) =>
 			if e.originalEvent.touches
 				x = e.originalEvent.touches[0].pageX
 				y = e.originalEvent.touches[0].pageY
@@ -61,6 +61,7 @@ class FL.Controller
 			e.preventDefault()
 
 			@$dom.trigger 'move'
+		, 100)
 
 		# Check devices.
 		if /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)

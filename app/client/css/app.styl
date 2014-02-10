@@ -2,6 +2,7 @@ html, body
 	overflow hidden
 
 #main
+	position relative
 	margin auto
 
 #stage
@@ -9,8 +10,22 @@ html, body
 	margin auto
 	background #eee
 
+#game-over
+	position absolute
+	font-size 30pt
+	color #ff2458
+	width 100%
+
 #controller
 	display block
 	position relative
 	background #ccc
 	margin auto
+
+#display
+	position relative
+
+	&.large
+		font-size 16pt
+	&.small
+		font-size 10pt
