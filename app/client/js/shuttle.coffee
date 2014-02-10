@@ -32,11 +32,11 @@ class FL.Shuttle
 			[@x, @y, @radius, 0, 2 * Math.PI]
 
 	check_bound: ->
-		if @x < 0
-			@x = 0
-		if @x > FL.app.stage.width
-			@x = FL.app.stage.width
-		if @y < 0
-			@y = 0
-		if @y > FL.app.stage.height
-			@y = FL.app.stage.height
+		if @x < 2 * @radius
+			@x = 2 * @radius
+		if @x > FL.app.stage.width - 2 * @radius
+			@x = FL.app.stage.width - 2 * @radius
+		if @y < 2 * @radius
+			@y = 2 * @radius
+		if @y > FL.app.stage.height - 2 * @radius
+			@y = FL.app.stage.height - 2 * @radius

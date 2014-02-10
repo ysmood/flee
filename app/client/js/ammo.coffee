@@ -10,7 +10,7 @@ class FL.Ammo
 
 	random_props: ->
 		rand = _.random(1)
-		x = rand * FL.app.stage.width + @radius * (rand - 0.5)
+		x = rand * FL.app.stage.width + @radius * (2 * rand - 1)
 		y = Math.random() * FL.app.stage.height
 
 		# position
