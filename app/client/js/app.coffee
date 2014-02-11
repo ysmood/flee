@@ -62,7 +62,8 @@ class FL.App
 		, 1000)
 
 	clear_ammos: ->
-		@stage.children = [@shuttle]
+		@stage.children = _.filter @stage.children, (el) ->
+			not (el instanceof FL.Ammo)
 
 	init_controller: ->
 		@controller = new FL.Controller
