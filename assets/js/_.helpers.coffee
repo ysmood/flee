@@ -232,4 +232,11 @@ _.mixin(
 		else
 			play()
 
+	scale_image: (img, width, height) ->
+		cc = document.createElement("canvas")
+		cc.width = width
+		cc.height = height
+		ctx = cc.getContext("2d")
+		ctx.drawImage(img, 0, 0, width, height)
+		return cc
 )

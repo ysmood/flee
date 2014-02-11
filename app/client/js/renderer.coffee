@@ -17,6 +17,13 @@ class FL.Renderer
 					@ctx.arc.apply @ctx, el.circle()
 					@ctx.fill()
 					@ctx.closePath()
+
+				when 'image'
+					@ctx.drawImage(
+						el.image
+						el.x - el.radius
+						el.y - el.radius
+					)
 		return
 
 	clear_stage: ->

@@ -47,18 +47,18 @@ class FL.App
 	init_ammo_system: ->
 		num = 2
 
-		@$ammo_count.text @stage.children.length - 1
+		@$ammo_count.text @stage.count_ammos()
 
 		@ammo_timer = setInterval(=>
 			# As time passed, the number of the ammos will increase
 			# y = 5 * log(e, x)
-			n = 5 * Math.log(num) - @stage.children.length
+			n = 5 * Math.log(num) - @stage.count_ammos()
 			return if n <= 0
 			for i in [0..n]
 				@stage.add_child new FL.Ammo
 			num++
 
-			@$ammo_count.text @stage.children.length - 1
+			@$ammo_count.text @stage.count_ammos() - 1
 		, 1000)
 
 	clear_ammos: ->

@@ -1,7 +1,15 @@
 class FL.Shuttle
 	constructor: ->
-		@_color = '#3b61e0'
+		@image = new Image
+		@image.src = '/app/img/shuttle.png'
+
 		@radius = FL.app.stage.width * 0.02
+		@width = @radius * 2
+		@height = @width
+
+		@image.onload = =>
+			@image = _.scale_image(@image, @width, @height)
+
 		@reset()
 
 	reset: ->
@@ -11,7 +19,7 @@ class FL.Shuttle
 		]
 
 	type: ->
-		'circle'
+		'image'
 
 	update: ->
 		@x += FL.app.controller.velocity.x * FL.app.time_delta

@@ -1,6 +1,6 @@
 class FL.Ammo
 	constructor: ->
-		@radius = FL.app.stage.width * 0.015
+		@radius = Math.round FL.app.stage.width * 0.015
 		@base_velocity = FL.app.stage.width * 0.1
 		@random_props()
 		@_color = '#f5d83d'
@@ -53,7 +53,13 @@ class FL.Ammo
 		if circle
 			[@x, @y, @radius] = circle
 		else
-			[@x, @y, @radius, 0, 2 * Math.PI]
+			[
+				Math.round @x
+				Math.round @y
+				@radius
+				0
+				2 * Math.PI
+			]
 
 	check_bound: ->
 		if @x < -@radius or

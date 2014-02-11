@@ -12,6 +12,11 @@ class FL.Stage
 
 		@children = []
 
+	count_ammos: ->
+		_.filter(@children, (el) ->
+			el instanceof FL.Ammo
+		).length
+
 	update: ->
 		# All dead children will be removed from the stage.
 		list = []
