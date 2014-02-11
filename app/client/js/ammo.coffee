@@ -3,7 +3,7 @@ class FL.Ammo
 		@image = new Image
 		@image.src = '/app/img/star.png'
 
-		@radius = Math.round FL.app.stage.width * 0.02
+		@radius = Math.round FL.app.stage.width * 0.03
 		@width = @radius * 2
 		@height = @width
 
