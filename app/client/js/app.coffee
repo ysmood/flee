@@ -5,10 +5,9 @@ class FL.App
 
 		@init_size()
 		@init_stage()
-		@init_renderer()
 		@init_controller()
+		@init_renderer()
 		@init_shuttle()
-		@init_ammo_system()
 		@init_display()
 
 	init_size: ->
@@ -17,7 +16,7 @@ class FL.App
 		w = $win.width()
 		h = $win.height()
 
-		if w / h > 1
+		if w / h > 2 / 3
 			$main.height h
 			$main.width Math.floor(h * 2 / 3)
 		else
@@ -29,6 +28,13 @@ class FL.App
 		$('#stage-info').css({ height: @stage.height })
 
 	init_renderer: ->
+		window.requestAnimationFrame = window.webkitRequestAnimationFrame or
+			window.mozRequestAnimationFrame or
+			window.oRequestAnimationFrame or
+			window.msRequestAnimationFrame or
+			(callback, element) ->
+				window.setTimeout( callback, 1000 / 60 )
+
 		@renderer = new FL.Renderer @stage
 
 	init_shuttle: ->
@@ -36,15 +42,19 @@ class FL.App
 		@stage.add_child @shuttle
 
 	init_ammo_system: ->
-		num = 32
+		num = 2
 
-		setInterval(
-			=>
-				n = num - @stage.children.length
-				return if n <= 0
-				for i in [0..n]
-					@stage.add_child new FL.Ammo
-		1000)
+		@$ammo_count.text @stage.children.length - 1
+
+		@ammo_timer = setInterval(=>
+			n = 5 * Math.log(num) - @stage.children.length
+			return if n <= 0
+			for i in [0..n]
+				@stage.add_child new FL.Ammo
+			num++
+
+			@$ammo_count.text @stage.children.length - 1
+		, 1000)
 
 	clear_ammos: ->
 		@stage.children = [@shuttle]
@@ -54,11 +64,18 @@ class FL.App
 		$('#controller-info').css({
 			height: @controller.height
 			'line-height': @controller.height + 'px'
-		}).click @start
+		})
+		$('#main').mousedown @start
 
 	init_display: ->
-		$('#display').css({ top: - @controller.height })
 		@$time = $('#display .time')
+		@$ammo_count = $('#display .ammo')
+		@$best = $('#display .best')
+		@best = +localStorage.getItem('best') or 0
+
+		@$best.text  _.numberFormat(@best, 2) + 's'
+
+		$('#display').css({ top: - @controller.height })
 
 		w = $(window).width()
 		if w < 500
@@ -74,13 +91,9 @@ class FL.App
 		@last_timestamp = now
 
 	update_timer: =>
-		if @is_stop
-			clearInterval @timer
-			return
+		@play_time = (Date.now() - @start_time) / 1000
 
-		@$time.text _.numberFormat(
-			(Date.now() - @start_time) / 1000, 2
-		) + 's'
+		@$time.text _.numberFormat(@play_time, 2) + 's'
 
 	collision_test: ->
 		for el in @stage.children
@@ -88,12 +101,21 @@ class FL.App
 
 			d = _.distance(el, @shuttle)
 			if d < el.radius + @shuttle.radius
-				@stop()
-				$('#stage-info, #controller-info').removeClass('hide')
+				@game_over()
 
-	stop: ->
+	game_over: ->
 		@is_stop = true
 		@controller.$dom.one 'click', @start
+
+		clearInterval @timer
+		clearInterval @ammo_timer
+
+		$('#stage-info, #controller-info').removeClass('hide')
+
+		if @play_time > @best
+			@best = @play_time
+			@$best.text _.numberFormat(@best, 2) + 's'
+			localStorage.setItem('best', @best)
 
 	start: =>
 		$('#stage-info, #controller-info').addClass('hide')
@@ -105,6 +127,7 @@ class FL.App
 		@controller.reset()
 		@shuttle.reset()
 		@clear_ammos()
+		@init_ammo_system()
 
 		requestAnimationFrame @update
 

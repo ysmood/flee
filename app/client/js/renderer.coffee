@@ -16,8 +16,6 @@ class FL.Renderer
 					@ctx.beginPath()
 					@ctx.arc.apply @ctx, el.circle()
 					@ctx.fill()
-					@ctx.strokeStyle = '#999'
-					@ctx.stroke()
 					@ctx.closePath()
 		return
 
