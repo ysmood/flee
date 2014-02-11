@@ -8,34 +8,43 @@ html, body
 #stage
 	display block
 	margin auto
-	background #eee
+	background url('/app/img/bg.jpg') repeat
+
+	&.blur
+		-webkit-filter blur(3px)
+		-ms-filter blur(3px)
+		filter blur(3px)
 
 #stage-info
 	position absolute
 	width 100%
 	top 0
 	font-size 30pt
-	text-shadow 1pt 1pt 4pt #ADA6C4
+	color #fff
+	text-shadow 1pt 1pt 4pt #928A99
+	background: rgba(255,255,255,0.5)
 	.time
-		color rgb(204, 39, 138)
+		color #FF00AD
 
 #controller-info
 	position absolute
 	width 100%
 	bottom 0
 	font-size 24pt
-	background #aaa
+	background #D1DCF0
 	cursor pointer
+
 
 #controller
 	display block
 	position relative
-	background #ccc
+	background #D1DCF0
 	margin auto
 
 #display
 	position relative
 	padding-left 3pt
+	display inline-block
 
 	&.large
 		font-size 16pt

@@ -239,4 +239,15 @@ _.mixin(
 		ctx = cc.getContext("2d")
 		ctx.drawImage(img, 0, 0, width, height)
 		return cc
+
+	tile_image: (img, num) ->
+		cc = document.createElement("canvas")
+		cc.width = img.width * num
+		cc.height = img.height * num
+		ctx = cc.getContext("2d")
+		for i in [0...num]
+			for j in [0...num]
+				ctx.drawImage(img, i * img.width, j * img.height)
+		return cc
+
 )

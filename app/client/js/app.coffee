@@ -7,6 +7,7 @@ class FL.App
 		@init_stage()
 		@init_controller()
 		@init_renderer()
+		@init_bg()
 		@init_shuttle()
 		@init_display()
 
@@ -39,6 +40,10 @@ class FL.App
 				window.setTimeout( callback, 1000 / 60 )
 
 		@renderer = new FL.Renderer @stage
+
+	init_bg: ->
+		@bg = new FL.Bg
+		@stage.add_child @bg
 
 	init_shuttle: ->
 		@shuttle = new FL.Shuttle
@@ -109,6 +114,21 @@ class FL.App
 			if d < el.radius + @shuttle.radius
 				@game_over()
 
+	start: =>
+		$('#stage-info, #controller-info').addClass('hide')
+		@stage.$dom.removeClass('blur')
+		@is_stop = false
+
+		@start_time = Date.now()
+		@timer = setInterval(@update_timer, 100)
+
+		@controller.reset()
+		@shuttle.reset()
+		@clear_ammos()
+		@init_ammo_system()
+
+		requestAnimationFrame @update
+
 	game_over: ->
 		@is_stop = true
 
@@ -117,6 +137,7 @@ class FL.App
 
 		$('#stage-info, #controller-info').removeClass('hide')
 		$('#stage-info .smilley').hide()
+		@stage.$dom.addClass('blur')
 
 		if @play_time > @best
 			@best = @play_time
@@ -129,20 +150,6 @@ class FL.App
 		$('#stage-info .time').text _.numberFormat(@best, 2)
 
 		$('#main').one 'click', @start
-
-	start: =>
-		$('#stage-info, #controller-info').addClass('hide')
-		@is_stop = false
-
-		@start_time = Date.now()
-		@timer = setInterval(@update_timer, 100)
-
-		@controller.reset()
-		@shuttle.reset()
-		@clear_ammos()
-		@init_ammo_system()
-
-		requestAnimationFrame @update
 
 	update: =>
 		if @is_stop

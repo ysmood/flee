@@ -3,7 +3,7 @@ class FL.Ammo
 		@radius = Math.round FL.app.stage.width * 0.015
 		@base_velocity = FL.app.stage.width * 0.1
 		@random_props()
-		@_color = '#f5d83d'
+		@_color = '#fff42a'
 
 	random: (max, min) ->
 		Math.random() * (max - min) + min
@@ -33,9 +33,6 @@ class FL.Ammo
 		-1)
 		offset = _.pt_scale(offset, @random(0.3, 0.6))
 		@velocity = _.pt_sum(@velocity, offset)
-
-	type: ->
-		'circle'
 
 	update: ->
 		@x += @velocity.x * FL.app.time_delta

@@ -18,9 +18,6 @@ class FL.Shuttle
 			FL.app.stage.height / 2
 		]
 
-	type: ->
-		'image'
-
 	update: ->
 		@x += FL.app.controller.velocity.x * FL.app.time_delta
 		@y += FL.app.controller.velocity.y * FL.app.time_delta
