@@ -6,7 +6,6 @@ class FL.Stage
 
 		@$dom = $('#stage')
 		@dom = @$dom[0]
-
 		@dom.width = @width
 		@dom.height = @height
 

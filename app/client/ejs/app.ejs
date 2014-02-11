@@ -5,7 +5,7 @@
 
 	<?= css(class_name) ?>
 
-	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="viewport" content="user-scalable=no">
 
 	<script type="text/javascript">
 		// Main namespace.
@@ -16,18 +16,23 @@
 </head>
 <body>
 
-	<div id="main">
+	<div id="main" class="font-n">
 		<canvas id='stage'></canvas>
 
-		<div id="stage-info" class="hide text-center">
-			<span class='smilley no'>( °Д °;)</span>
-			<span class='smilley oh'>(´･ω･`)✧</span>
-			<span class='time font-l'></span>s
+		<div id="stage-info" class="text-center">
+			<div class="result">
+				<span class='smilley no'>( °Д °;)</span>
+				<span class='smilley oh'>(´･ω･`)✧</span>
+				<span class='time font-l'></span>s
+			</div>
+			<div class='font-l'>Tap to Start</div>
 		</div>
 
 		<canvas id="controller"></canvas>
 
-		<div id="controller-info" class="text-center font-l">Tap to Start</div>
+		<div id="controller-info" class="text-center font-l">
+			Move Mouse or <br> Touch Move Here <br> to Control
+		</div>
 
 		<div id="display">
 			<div>

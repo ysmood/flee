@@ -1,5 +1,6 @@
 html, body
 	overflow hidden
+	font-size 18px
 
 #main
 	position relative
@@ -8,7 +9,7 @@ html, body
 #stage
 	display block
 	margin auto
-	background url('/app/img/bg.jpg') repeat
+	background url('/app/img/bg.png') repeat
 
 	&.blur
 		-webkit-filter blur(3px)
@@ -19,10 +20,13 @@ html, body
 	position absolute
 	width 100%
 	top 0
-	font-size 30pt
-	color #fff
-	text-shadow 1pt 1pt 4pt #928A99
+	font-size 5em
+	color #343C47
+	text-shadow 0.1em 0.1em 0.2em #6C6375
 	background: rgba(255,255,255,0.5)
+	padding-top 2em
+	.result
+		display none
 	.time
 		color #FF00AD
 
@@ -30,10 +34,9 @@ html, body
 	position absolute
 	width 100%
 	bottom 0
-	font-size 24pt
-	background #D1DCF0
-	cursor pointer
-
+	font-size 2em
+	padding-top 2em
+	cursor default
 
 #controller
 	display block
@@ -43,11 +46,6 @@ html, body
 
 #display
 	position relative
-	padding-left 3pt
+	padding-left 0.3em
 	display inline-block
-
-	&.large
-		font-size 16pt
-
-	&.small
-		font-size 10pt
+	font-size 1.7em

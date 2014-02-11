@@ -51,8 +51,8 @@ class FL.Ammo
 			[@x, @y, @radius] = circle
 		else
 			[
-				Math.round @x
-				Math.round @y
+				@x
+				@y
 				@radius
 				0
 				2 * Math.PI

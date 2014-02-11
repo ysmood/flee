@@ -28,7 +28,6 @@ class FL.App
 		@stage = new FL.Stage
 		$('#stage-info').css {
 			height: @stage.height
-			lineHeight: @stage.height + 'px'
 		}
 
 	init_renderer: ->
@@ -74,7 +73,6 @@ class FL.App
 		@controller = new FL.Controller
 		$('#controller-info').css({
 			height: @controller.height
-			'line-height': @controller.height + 'px'
 		})
 		$('#main').one 'click', @start
 
@@ -87,12 +85,6 @@ class FL.App
 		@$best.text  _.numberFormat(@best, 2) + 's'
 
 		$('#display').css({ top: - @controller.height })
-
-		w = $(window).width()
-		if w < 500
-			$('#display').addClass('small')
-		else
-			$('#display').addClass('large')
 
 	update_timestamp: ->
 		@last_timestamp ?= Date.now()
@@ -115,19 +107,20 @@ class FL.App
 				@game_over()
 
 	start: =>
-		$('#stage-info, #controller-info').addClass('hide')
-		@stage.$dom.removeClass('blur')
-		@is_stop = false
+		require ['/jquery.transit/jquery.transit.js'], =>
+			$('#stage-info, #controller-info').transit_fade_out()
+			@stage.$dom.removeClass('blur')
+			@is_stop = false
 
-		@start_time = Date.now()
-		@timer = setInterval(@update_timer, 100)
+			@start_time = Date.now()
+			@timer = setInterval(@update_timer, 100)
 
-		@controller.reset()
-		@shuttle.reset()
-		@clear_ammos()
-		@init_ammo_system()
+			@controller.reset()
+			@shuttle.reset()
+			@clear_ammos()
+			@init_ammo_system()
 
-		requestAnimationFrame @update
+			requestAnimationFrame @update
 
 	game_over: ->
 		@is_stop = true
@@ -135,8 +128,9 @@ class FL.App
 		clearInterval @timer
 		clearInterval @ammo_timer
 
-		$('#stage-info, #controller-info').removeClass('hide')
+		$('#stage-info, #controller-info').transit_fade_in()
 		$('#stage-info .smilley').hide()
+		$('#stage-info .result').show()
 		@stage.$dom.addClass('blur')
 
 		if @play_time > @best
@@ -147,7 +141,7 @@ class FL.App
 		else
 			$('#stage-info .no').show()
 
-		$('#stage-info .time').text _.numberFormat(@best, 2)
+		$('#stage-info .time').text _.numberFormat(@play_time, 2)
 
 		$('#main').one 'click', @start
 
