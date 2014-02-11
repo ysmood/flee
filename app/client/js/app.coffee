@@ -24,6 +24,9 @@ class FL.App
 			$main.width w
 			$main.height h
 
+		if $main.width() > 920
+			$('body').addClass('large')
+
 	init_stage: ->
 		@stage = new FL.Stage
 		$('#stage-info').css {

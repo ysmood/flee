@@ -7,14 +7,7 @@ class FL.Renderer
 
 		for el in @stage.children
 			switch el.constructor.name
-				when 'Ammo'
-					@ctx.fillStyle = el.color()
-					@ctx.beginPath()
-					@ctx.arc.apply @ctx, el.circle()
-					@ctx.fill()
-					@ctx.closePath()
-
-				when 'Shuttle'
+				when 'Ammo', 'Shuttle'
 					@ctx.drawImage(
 						el.image
 						el.x - el.radius

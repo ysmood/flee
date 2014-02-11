@@ -1,9 +1,17 @@
 class FL.Ammo
 	constructor: ->
-		@radius = Math.round FL.app.stage.width * 0.015
+		@image = new Image
+		@image.src = '/app/img/star.png'
+
+		@radius = Math.round FL.app.stage.width * 0.02
+		@width = @radius * 2
+		@height = @width
+
+		@image.onload = =>
+			@image = _.scale_image(@image, @width, @height)
+
 		@base_velocity = FL.app.stage.width * 0.1
 		@random_props()
-		@_color = '#fff42a'
 
 	random: (max, min) ->
 		Math.random() * (max - min) + min
