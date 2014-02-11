@@ -240,6 +240,16 @@ _.mixin(
 		ctx.drawImage(img, 0, 0, width, height)
 		return cc
 
+	rotate_image: (img, angle) ->
+		cc = document.createElement("canvas")
+		cc.width = img.width + 1
+		cc.height = img.height + 1
+		ctx = cc.getContext("2d")
+		ctx.translate(img.width / 2, img.height / 2)
+		ctx.rotate(angle)
+		ctx.drawImage(img, -img.width / 2, -img.height / 2)
+		return cc
+
 	tile_image: (img, num) ->
 		cc = document.createElement("canvas")
 		cc.width = img.width * num
