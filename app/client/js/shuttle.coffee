@@ -1,6 +1,6 @@
 class FL.Shuttle
 	constructor: ->
-		@_color = '#333'
+		@_color = '#3b61e0'
 		@radius = FL.app.stage.width * 0.02
 		@reset()
 

@@ -25,7 +25,10 @@ class FL.App
 
 	init_stage: ->
 		@stage = new FL.Stage
-		$('#stage-info').css({ height: @stage.height })
+		$('#stage-info').css {
+			height: @stage.height
+			lineHeight: @stage.height + 'px'
+		}
 
 	init_renderer: ->
 		window.requestAnimationFrame = window.webkitRequestAnimationFrame or
@@ -47,6 +50,8 @@ class FL.App
 		@$ammo_count.text @stage.children.length - 1
 
 		@ammo_timer = setInterval(=>
+			# As time passed, the number of the ammos will increase
+			# y = 5 * log(e, x)
 			n = 5 * Math.log(num) - @stage.children.length
 			return if n <= 0
 			for i in [0..n]
@@ -111,11 +116,17 @@ class FL.App
 		clearInterval @ammo_timer
 
 		$('#stage-info, #controller-info').removeClass('hide')
+		$('#stage-info .smilley').hide()
 
 		if @play_time > @best
 			@best = @play_time
-			@$best.text _.numberFormat(@best, 2) + 's'
+			@$best.text _.numberFormat(@best, 2)
 			localStorage.setItem('best', @best)
+			$('#stage-info .oh').show()
+		else
+			$('#stage-info .no').show()
+
+		$('#stage-info .time').text _.numberFormat(@best, 2)
 
 	start: =>
 		$('#stage-info, #controller-info').addClass('hide')
