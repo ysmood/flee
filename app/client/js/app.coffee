@@ -70,7 +70,7 @@ class FL.App
 			height: @controller.height
 			'line-height': @controller.height + 'px'
 		})
-		$('#main').mousedown @start
+		$('#main').one 'click', @start
 
 	init_display: ->
 		@$time = $('#display .time')
@@ -110,7 +110,6 @@ class FL.App
 
 	game_over: ->
 		@is_stop = true
-		@controller.$dom.one 'click', @start
 
 		clearInterval @timer
 		clearInterval @ammo_timer
@@ -127,6 +126,8 @@ class FL.App
 			$('#stage-info .no').show()
 
 		$('#stage-info .time').text _.numberFormat(@best, 2)
+
+		$('#main').one 'click', @start
 
 	start: =>
 		$('#stage-info, #controller-info').addClass('hide')
