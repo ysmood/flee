@@ -50,8 +50,8 @@ class FL.Controller
 				@mouse_pos.x = x - offset.left
 				@mouse_pos.y = y - offset.top
 			else
-				@mouse_pos.x = e.offsetX
-				@mouse_pos.y = e.offsetY
+				@mouse_pos.x = e.offsetX or e.clientX - $(e.target).offset().left
+				@mouse_pos.y = e.offsetY or e.clientY - $(e.target).offset().top
 
 			@velocity = {
 				x: (@mouse_pos.x / @width * 2 - 1) * @max_velocity

@@ -1,7 +1,7 @@
 class FL.Bg
 	constructor: ->
 		@tile = new Image
-		@tile.src = '/app/img/bg.png'
+		@tile.src = '/app/img/bg_cloud.png'
 		@tile.onload = =>
 			tile_num = Math.ceil(FL.app.stage.width / @tile.width) + 2
 			@image = _.tile_image(@tile, tile_num)

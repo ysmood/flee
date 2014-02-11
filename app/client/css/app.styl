@@ -8,11 +8,12 @@ html, body
 #main
 	position relative
 	margin auto
+	background url('/app/img/bg_cloud.png') repeat
 
 #stage
 	display block
 	margin auto
-	background url('/app/img/bg.png') repeat
+	border-bottom 0.2em solid #6E87A2
 
 	&.blur
 		-webkit-filter blur(3px)
@@ -43,17 +44,20 @@ html, body
 	padding-top 2em
 	cursor default
 	color #fff
-	text-shadow 0.05em 0.05em 0.1em #bfafcf
+	text-shadow 0.05em 0.05em 0.1em #507C67
 
 #controller
 	display block
 	position relative
-	background #D1DCF0
 	margin auto
+	border-radius 1em
+	background rgba(87, 162, 132, 0.82)
 
 #display
 	position relative
 	padding-left 0.3em
 	display inline-block
-	font-size 1.7em
+	font-size 1.5em
 	color #AF6542
+	background rgba(255, 255, 255, 0.55);
+	border-radius 0.3em

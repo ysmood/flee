@@ -51,6 +51,9 @@ class FL.App
 		@shuttle = new FL.Shuttle
 		@stage.add_child @shuttle
 
+		# Preload ammo assets.
+		new FL.Ammo
+
 	init_ammo_system: ->
 		num = 2
 
