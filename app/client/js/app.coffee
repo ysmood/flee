@@ -120,7 +120,7 @@ class FL.App
 
 		if @play_time > @best
 			@best = @play_time
-			@$best.text _.numberFormat(@best, 2)
+			@$best.text _.numberFormat(@best, 2) + 's'
 			localStorage.setItem('best', @best)
 			$('#stage-info .oh').show()
 		else
