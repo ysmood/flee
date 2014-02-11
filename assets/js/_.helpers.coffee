@@ -234,8 +234,8 @@ _.mixin(
 
 	scale_image: (img, width, height) ->
 		cc = document.createElement("canvas")
-		cc.width = width
-		cc.height = height
+		cc.width = width + 1
+		cc.height = height + 1
 		ctx = cc.getContext("2d")
 		ctx.drawImage(img, 0, 0, width, height)
 		return cc
