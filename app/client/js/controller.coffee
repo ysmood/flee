@@ -29,7 +29,7 @@ class FL.Controller
 		@ctx.closePath()
 
 	draw_indicator: ->
-		@ctx.fillStyle = '#9ebbff'
+		@ctx.fillStyle = '#66ccff'
 		@ctx.beginPath()
 		@ctx.arc(@mouse_pos.x, @mouse_pos.y, @width * 0.05, 0, 2 * Math.PI)
 		@ctx.fill()
