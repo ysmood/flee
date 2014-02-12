@@ -19,18 +19,22 @@
 	<div id="main" class="font-n">
 		<canvas id='stage' class='blur'></canvas>
 
-		<div id="stage-info" class="text-center">
+		<div id="stage-info" class="font-l text-center">
+			<div class="logo">
+				Fl
+				<img src="/app/img/shuttle.png" alt="flee">
+				e
+			</div>
 			<div class="result">
-				<span class='smilley no'>( °Д °;)</span>
-				<span class='smilley oh'>(´･ω･`)✧</span>
-				<span class='time font-l'></span>s
+				<span class='smiley'></span>
+				<span class='time'></span>s
 			</div>
 			<div class='tap'>Tap to Start</div>
 		</div>
 
 		<canvas id="controller"></canvas>
 
-		<div id="controller-info" class="text-center ">
+		<div id="controller-info" class="text-center font-l">
 			Move Mouse or <br> Touch Move Here <br> to Control
 		</div>
 
@@ -51,6 +55,11 @@
 				<span class='version'>Ver. 1.0</span>
 			</div>
 		</div>
+
+		<!-- Global modal message box. -->
+		<div id="NB-notifications" class="font-n">
+		</div>
+
 	</div>
 
 	<?= foot ?>

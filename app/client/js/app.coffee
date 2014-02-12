@@ -51,6 +51,11 @@ class FL.App
 		@shuttle = new FL.Shuttle
 		@stage.add_child @shuttle
 
+		@nice_flee = _.debounce(->
+			return if @is_stop
+			_.notify { info: '( っ*\'ω\'*c) nice!', delay: 1500 }
+		, 300)
+
 		# Preload ammo assets.
 		new FL.Ammo
 
@@ -109,8 +114,11 @@ class FL.App
 			continue if el instanceof FL.Shuttle
 
 			d = _.distance(el, @shuttle)
-			if d < el.radius + @shuttle.radius
+
+			if d <= el.radius + @shuttle.radius
 				@game_over()
+			else if d < el.radius + @shuttle.radius * 1.2
+				@nice_flee()
 
 	start: =>
 		require ['/jquery.transit/jquery.transit.js'], =>
@@ -135,7 +143,6 @@ class FL.App
 		clearInterval @ammo_timer
 
 		$('#stage-info, #controller-info').transit_fade_in()
-		$('#stage-info .smilley').hide()
 		$('#stage-info .result').show()
 		@stage.$dom.addClass('blur')
 
@@ -143,9 +150,9 @@ class FL.App
 			@best = @play_time
 			@$best.text _.numberFormat(@best, 2) + 's'
 			localStorage.setItem('best', @best)
-			$('#stage-info .oh').show()
+			$('#stage-info .smiley').text '(´･ω･`)✧'
 		else
-			$('#stage-info .no').show()
+			$('#stage-info .smiley').text '( °Д °;)'
 
 		$('#stage-info .time').text _.numberFormat(@play_time, 2)
 
