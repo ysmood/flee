@@ -4,14 +4,9 @@ class FL.Ammo
 		@width = @radius * 2
 		@height = @width
 
-		if FL.Ammo.image_cache
-			@image = FL.Ammo.image_cache
-		else
-			@image = new Image
-			@image.src = '/app/img/star.png'
-			@image.onload = =>
-				@image = _.scale_image(@image, @width, @height)
-				FL.Ammo.image_cache = @image
+		_.image('/app/img/star.png', (image) =>
+			@image = image
+		, @width, @height)
 
 		@base_velocity = FL.app.stage.width * 0.1
 		@random_props()

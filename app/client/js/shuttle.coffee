@@ -1,14 +1,12 @@
 class FL.Shuttle
 	constructor: ->
-		@image = new Image
-		@image.src = '/app/img/shuttle.png'
-
 		@radius = FL.app.stage.width * 0.03
 		@width = @radius * 2
 		@height = @width
 
-		@image.onload = =>
-			@image = _.scale_image(@image, @width, @height)
+		_.image('/app/img/shuttle.png', (image) =>
+			@image = image
+		, @width, @height)
 
 		@reset()
 
