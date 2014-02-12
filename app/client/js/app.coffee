@@ -1,3 +1,4 @@
+require ['/jquery.transit/jquery.transit.js']
 
 class FL.App
 	constructor: ->
@@ -55,6 +56,7 @@ class FL.App
 
 		@nice_flee = _.debounce(->
 			return if @is_stop
+			_.play_audio('/app/audio/fuu.mp3')
 			_.notify { info: '( っ*\'ω\'*c) nice!', delay: 1500 }
 		, 300)
 
@@ -66,16 +68,24 @@ class FL.App
 
 		@$ammo_count.text @stage.count_ammos()
 
+		last = 0
+
 		@ammo_timer = setInterval(=>
 			# As time passed, the number of the ammos will increase
 			# y = 5 * log(e, x)
 			n = 5 * Math.log(num) - @stage.count_ammos()
-			return if n <= 0
-			for i in [0..n]
+			for i in [0...n]
 				@stage.add_child new FL.Ammo
 			num++
 
-			@$ammo_count.text @stage.count_ammos() - 1
+			count = @stage.count_ammos()
+
+			# When ammo number changed, play a sound to notice the player.
+			if last != count
+				_.play_audio('/app/audio/tsin.mp3')
+
+			@$ammo_count.text count
+			last = count
 		, 1000)
 
 	clear_ammos: ->
@@ -123,23 +133,26 @@ class FL.App
 				@nice_flee()
 
 	start: =>
-		require ['/jquery.transit/jquery.transit.js'], =>
-			$('#stage-info, #controller-info').transit_fade_out()
-			@stage.$dom.removeClass('blur')
-			@is_stop = false
+		_.play_audio('/app/audio/da.mp3')
 
-			@start_time = Date.now()
-			@timer = setInterval(@update_timer, 100)
+		$('#stage-info, #controller-info').transit_fade_out()
+		@stage.$dom.removeClass('blur')
+		@is_stop = false
 
-			@controller.reset()
-			@shuttle.reset()
-			@clear_ammos()
-			@init_ammo_system()
+		@start_time = Date.now()
+		@timer = setInterval(@update_timer, 100)
 
-			requestAnimationFrame @update
+		@controller.reset()
+		@shuttle.reset()
+		@clear_ammos()
+		@init_ammo_system()
+
+		requestAnimationFrame @update
 
 	game_over: ->
 		@is_stop = true
+
+		_.play_audio('/app/audio/bo.mp3')
 
 		clearInterval @timer
 		clearInterval @ammo_timer
