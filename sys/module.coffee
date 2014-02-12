@@ -111,9 +111,9 @@ class NB.Module
 			NB.express = require('express')
 			NB.app = NB.express()
 			NB.server = require('http').Server(NB.app)
-			NB.io = require('socket.io').listen(NB.server)
 
-			NB.io.set('log level', 1)
+			# NB.io = require('socket.io').listen(NB.server)
+			# NB.io.set('log level', 1)
 
 	_init_renderer: ->
 		if not NB.Renderer
