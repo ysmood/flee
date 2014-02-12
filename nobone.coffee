@@ -35,7 +35,7 @@ class NB.Nobone extends NB.Module
 		@set_static_dir('assets')
 		NB.app.use('/usr', NB.express.static('usr'))
 
-		NB.app.use(NB.express.favicon('assets/img/NB.png'))
+		NB.app.use(NB.express.favicon('app/client/img/shuttle.png'))
 
 		NB.app.use(@show_404)
 
