@@ -6,6 +6,8 @@ It's recommanded to use Chrome to play the game. Have fun~
 
 ### [Demo][1]
 
+**Be a man and hold on for 20 seconds!**
+
 ![screen shot][2]
 
 #### The MIT License (MIT)
