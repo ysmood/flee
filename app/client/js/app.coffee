@@ -26,6 +26,8 @@ class FL.App
 
 		if $main.width() > 920
 			$('body').addClass('large')
+		else if $main.width() < 500
+			$('body').addClass('small')
 
 	init_stage: ->
 		@stage = new FL.Stage

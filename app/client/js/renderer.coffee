@@ -6,15 +6,15 @@ class FL.Renderer
 		@clear_stage()
 
 		for el in @stage.children
-			switch el.constructor.name
-				when 'Ammo', 'Shuttle'
+			switch el.constructor
+				when FL.Ammo, FL.Shuttle
 					@ctx.drawImage(
 						el.image
 						el.x - el.radius
 						el.y - el.radius
 					)
 
-				when 'Bg'
+				when FL.Bg
 					@ctx.drawImage(
 						el.image
 						el.x
