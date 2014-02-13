@@ -11,7 +11,7 @@ class FL.Controller
 		@$dom[0].width = @width
 		@$dom[0].height = @height
 
-		@max_velocity = FL.app.stage.width * 0.6
+		@max_velocity = FL.app.stage.width
 
 		@reset()
 

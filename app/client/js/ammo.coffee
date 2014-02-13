@@ -8,7 +8,7 @@ class FL.Ammo
 			@image = image
 		, @width, @height)
 
-		@base_velocity = FL.app.stage.width * 0.1
+		@base_velocity = FL.app.stage.width * 0.2
 
 		# If the ammo is too near to the shuttle, recalculate the position.
 		while true

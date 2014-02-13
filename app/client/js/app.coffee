@@ -119,6 +119,10 @@ class FL.App
 	update_timer: =>
 		@play_time = (Date.now() - @start_time) / 1000
 
+		@report_time_count ?= 1
+		if @report_time_count++ % 50 == 0
+			_.notify { info: _.numberFormat(@play_time, 0) + 's' }
+
 		@$time.text _.numberFormat(@play_time, 2) + 's'
 
 	collision_test: ->
