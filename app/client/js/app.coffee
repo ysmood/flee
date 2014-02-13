@@ -119,6 +119,7 @@ class FL.App
 			else
 				@pause()
 		$(window).blur =>
+			if not @is_stop
 				@pause()
 
 	update_timestamp: ->
