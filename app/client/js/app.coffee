@@ -11,6 +11,7 @@ class FL.App
 		@init_bg()
 		@init_shuttle()
 		@init_display()
+		@init_game_control()
 
 	init_size: ->
 		$win = $(window)
@@ -71,6 +72,8 @@ class FL.App
 		last = 0
 
 		@ammo_timer = setInterval(=>
+			if @is_pause
+				return
 			# As time passed, the number of the ammos will increase
 			# y = 7 * log(e, x)
 			n = 7 * Math.log(num) - @stage.count_ammos()
@@ -97,7 +100,6 @@ class FL.App
 		$('#controller-info').css({
 			height: @controller.height
 		})
-		$('#main').one 'click', @start
 
 	init_display: ->
 		@$time = $('#display .time')
@@ -107,7 +109,15 @@ class FL.App
 
 		@$best.text  _.numberFormat(@best, 2) + 's'
 
-		$('#display').css({ top: - @controller.height })
+	init_game_control: ->
+		@is_stop = true
+		$('#main').on 'click', =>
+			if @is_stop
+				@start()
+			else if @is_pause
+				@resume()
+			else
+				@pause()
 
 	update_timestamp: ->
 		@last_timestamp ?= Date.now()
@@ -117,6 +127,9 @@ class FL.App
 		@last_timestamp = now
 
 	update_timer: =>
+		if @is_pause
+			return
+
 		@play_time = (Date.now() - @start_time) / 1000
 
 		if @report_time_count++ % 50 == 0
@@ -138,9 +151,13 @@ class FL.App
 	start: =>
 		_.play_audio('/app/audio/da.mp3')
 
-		$('#stage-info, #controller-info').transit_fade_out()
+		$('#stage-info, #controller-info').transit_fade_out(=>
+			$('#stage-info .result').hide()
+		)
 		@stage.$dom.removeClass('blur')
 		@is_stop = false
+
+		@resume()
 
 		@report_time_count = 1
 		@start_time = Date.now()
@@ -152,6 +169,16 @@ class FL.App
 		@init_ammo_system()
 
 		requestAnimationFrame @update
+
+	pause: ->
+		@is_pause = true
+		$('#stage-info, #controller-info').transit_fade_in()
+		$('#stage-info .tap').text 'Tap to Resume'
+
+	resume: ->
+		@is_pause = false
+		@last_timestamp = Date.now()
+		$('#stage-info, #controller-info').transit_fade_out()
 
 	game_over: ->
 		@is_stop = true
@@ -165,6 +192,8 @@ class FL.App
 		$('#stage-info .result').show()
 		@stage.$dom.addClass('blur')
 
+		@pause()
+
 		if @play_time > @best
 			@best = @play_time
 			@$best.text _.numberFormat(@best, 2) + 's'
@@ -174,11 +203,15 @@ class FL.App
 			$('#stage-info .smiley').text '( °Д °;)'
 
 		$('#stage-info .time').text _.numberFormat(@play_time, 2)
+		$('#stage-info .tap').text 'Tap to Restart'
 
-		$('#main').one 'click', @start
 
 	update: =>
 		if @is_stop
+			return
+
+		if @is_pause
+			requestAnimationFrame @update
 			return
 
 		@update_timestamp()
