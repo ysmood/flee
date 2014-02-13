@@ -103,7 +103,19 @@ class FL.App
 		})
 
 	init_display: ->
-		@smiley_list = ['( °Д °;)', '(=ﾟωﾟ)ノ', '⊙︿⊙', '（/TДT)/', ',,Ծ‸Ծ,,', '(T＿T)']
+		@ranking_titles = [
+			'you sure?'
+			'dull man'
+			'( °Д °;)'
+			'(=ﾟωﾟ)ノ'
+			'beat the developer!'
+			'who\'s your daddy?'
+			'your dad know this?'
+			'time traveler!'
+			'eternal!'
+			'forever alone!'
+			'you cheater!'
+		]
 
 		@$time = $('#display .time')
 		@$ammo_count = $('#display .ammo')
@@ -216,7 +228,11 @@ class FL.App
 			localStorage.setItem('best', @best)
 			$('#stage-info .smiley').text '(´･ω･`)✧'
 		else
-			$('#stage-info .smiley').text @smiley_list[_.random(@smiley_list.length - 1)]
+			rank = Math.floor(Math.sqrt(@play_time)) - 1
+			if rank > @ranking_titles.length - 1
+				rank = @ranking_titles.length - 1
+			rank = 0 if rank < 0
+			$('#stage-info .smiley').text @ranking_titles[rank]
 
 		$('#stage-info .time').text _.numberFormat(@play_time, 2)
 		$('#stage-info .nice').text @nice_count
