@@ -8,8 +8,8 @@
     "bootstrap": "~3.0.0",
     "font-awesome": "~4.0.1",
     "jquery.transit": "~0.9.9",
-    "ys-keymaster": "~1.6.2"
+    "ys-keymaster": "~1.6.2",
+    "normalize-css": "~3.0.0"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
