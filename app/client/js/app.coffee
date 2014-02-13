@@ -226,13 +226,15 @@ class FL.App
 			@best = @play_time
 			@$best.text _.numberFormat(@best, 2) + 's'
 			localStorage.setItem('best', @best)
-			$('#stage-info .smiley').text '(´･ω･`)✧'
+			$('#stage-info .result').addClass('new_record')
 		else
-			rank = Math.floor(Math.sqrt(@play_time)) - 1
-			if rank > @ranking_titles.length - 1
-				rank = @ranking_titles.length - 1
-			rank = 0 if rank < 0
-			$('#stage-info .smiley').text @ranking_titles[rank]
+			$('#stage-info .result').removeClass('new_record')
+
+		rank = Math.floor(Math.sqrt(@play_time)) - 1
+		if rank > @ranking_titles.length - 1
+			rank = @ranking_titles.length - 1
+		rank = 0 if rank < 0
+		$('#stage-info .smiley').text @ranking_titles[rank]
 
 		$('#stage-info .time').text _.numberFormat(@play_time, 2)
 		$('#stage-info .nice').text @nice_count
