@@ -1,6 +1,6 @@
 {
   "name": "flee",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "nobone.coffee",
   "scripts": {
     "setup": "kit/app_mgr.sh setup",
