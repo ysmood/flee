@@ -132,12 +132,15 @@ class FL.App
 		if @is_pause
 			return
 
-		@play_time += (Date.now() - @last_timestamp) / 100
+		now = Date.now()
+		@play_time += (now - @last_play_time) / 1000
 
 		if @report_time_count++ % 50 == 0
 			_.notify { info: _.numberFormat(@play_time, 0) + 's' }
 
 		@$time.text _.numberFormat(@play_time, 2) + 's'
+
+		@last_play_time = now
 
 	collision_test: ->
 		for el in @stage.children
@@ -151,18 +154,20 @@ class FL.App
 				@nice_flee()
 
 	start: =>
+		@is_stop = false
+
+		@resume()
+
 		_.play_audio('/app/audio/da.mp3')
 
 		$('#stage-info, #controller-info').transit_fade_out(=>
 			$('#stage-info .result').hide()
 		)
 		@stage.$dom.removeClass('blur')
-		@is_stop = false
-
-		@resume()
 
 		@report_time_count = 1
 		@play_time = 0
+
 		@timer = setInterval(@update_timer, 100)
 
 		@controller.reset()
@@ -180,6 +185,7 @@ class FL.App
 	resume: ->
 		@is_pause = false
 		@last_timestamp = Date.now()
+		@last_play_time = Date.now()
 		$('#stage-info, #controller-info').transit_fade_out()
 
 	game_over: ->
@@ -206,7 +212,6 @@ class FL.App
 
 		$('#stage-info .time').text _.numberFormat(@play_time, 2)
 		$('#stage-info .tap').text 'Tap to Restart'
-
 
 	update: =>
 		if @is_stop
