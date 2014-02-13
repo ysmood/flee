@@ -132,7 +132,7 @@ class FL.App
 		if @is_pause
 			return
 
-		@play_time = (Date.now() - @start_time) / 1000
+		@play_time += (Date.now() - @last_timestamp) / 100
 
 		if @report_time_count++ % 50 == 0
 			_.notify { info: _.numberFormat(@play_time, 0) + 's' }
@@ -162,7 +162,7 @@ class FL.App
 		@resume()
 
 		@report_time_count = 1
-		@start_time = Date.now()
+		@play_time = 0
 		@timer = setInterval(@update_timer, 100)
 
 		@controller.reset()
@@ -180,7 +180,6 @@ class FL.App
 	resume: ->
 		@is_pause = false
 		@last_timestamp = Date.now()
-		@start_time = Date.now()
 		$('#stage-info, #controller-info').transit_fade_out()
 
 	game_over: ->
