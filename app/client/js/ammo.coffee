@@ -13,7 +13,7 @@ class FL.Ammo
 		# If the ammo is too near to the shuttle, recalculate the position.
 		while true
 			@random_props()
-			if _.distance(@, FL.app.shuttle) > @radius * 5
+			if _.distance(@, FL.app.shuttle) > @radius * 7
 				break
 
 	random: (max, min) ->
