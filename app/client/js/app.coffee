@@ -180,6 +180,7 @@ class FL.App
 	resume: ->
 		@is_pause = false
 		@last_timestamp = Date.now()
+		@start_time = Date.now()
 		$('#stage-info, #controller-info').transit_fade_out()
 
 	game_over: ->
