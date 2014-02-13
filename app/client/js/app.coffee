@@ -118,6 +118,8 @@ class FL.App
 				@resume()
 			else
 				@pause()
+		$(window).blur =>
+				@pause()
 
 	update_timestamp: ->
 		@last_timestamp ?= Date.now()
