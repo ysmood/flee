@@ -58,7 +58,7 @@ class FL.App
 		@nice_flee = _.debounce(->
 			return if @is_stop
 			_.play_audio('/app/audio/fuu.mp3')
-			_.notify { info: '( っ*\'ω\'*c) nice!', delay: 1500 }
+			_.notify { info: 'nice! ( っ*\'ω\'*c)', delay: 1500 }
 		, 300)
 
 		# Preload ammo assets.
@@ -137,7 +137,7 @@ class FL.App
 		@play_time += (now - @last_play_time) / 1000
 
 		if @report_time_count++ % 50 == 0
-			_.notify { info: _.numberFormat(@play_time, 0) + 's' }
+			_.notify { info: _.numberFormat(@play_time, 0) + 's (・ω・)', delay: 1500 }
 
 		@$time.text _.numberFormat(@play_time, 2) + 's'
 
