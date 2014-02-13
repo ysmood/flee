@@ -72,8 +72,8 @@ class FL.App
 
 		@ammo_timer = setInterval(=>
 			# As time passed, the number of the ammos will increase
-			# y = 5 * log(e, x)
-			n = 5 * Math.log(num) - @stage.count_ammos()
+			# y = 7 * log(e, x)
+			n = 7 * Math.log(num) - @stage.count_ammos()
 			for i in [0...n]
 				@stage.add_child new FL.Ammo
 			num++
@@ -119,7 +119,6 @@ class FL.App
 	update_timer: =>
 		@play_time = (Date.now() - @start_time) / 1000
 
-		@report_time_count ?= 1
 		if @report_time_count++ % 50 == 0
 			_.notify { info: _.numberFormat(@play_time, 0) + 's' }
 
@@ -143,6 +142,7 @@ class FL.App
 		@stage.$dom.removeClass('blur')
 		@is_stop = false
 
+		@report_time_count = 1
 		@start_time = Date.now()
 		@timer = setInterval(@update_timer, 100)
 
