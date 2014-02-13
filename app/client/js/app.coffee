@@ -57,6 +57,7 @@ class FL.App
 
 		@nice_flee = _.debounce(->
 			return if @is_stop
+			@nice_count++
 			_.play_audio('/app/audio/fuu.mp3')
 			_.notify { info: 'nice! ( っ*\'ω\'*c)', delay: 1500 }
 		, 300)
@@ -102,6 +103,8 @@ class FL.App
 		})
 
 	init_display: ->
+		@smiley_list = ['( °Д °;)', '(=ﾟωﾟ)ノ', '⊙︿⊙', '（/TДT)/', ',,Ծ‸Ծ,,', '(T＿T)']
+
 		@$time = $('#display .time')
 		@$ammo_count = $('#display .ammo')
 		@$best = $('#display .best')
@@ -111,7 +114,7 @@ class FL.App
 
 	init_game_control: ->
 		@is_stop = true
-		$('#main').on 'click', =>
+		$('#main').on 'click', '#stage, #stage-info, #controller, #controller-info', =>
 			if @is_stop
 				@start()
 			else if @is_pause
@@ -137,7 +140,11 @@ class FL.App
 		@play_time += (now - @last_play_time) / 1000
 
 		if @report_time_count++ % 50 == 0
-			_.notify { info: _.numberFormat(@play_time, 0) + 's (・ω・)', delay: 1500 }
+			$('#time-reporter')
+				.transit_fade_in()
+				.delay(1500)
+				.transit_fade_out()
+				.text _.numberFormat(@play_time, 0)
 
 		@$time.text _.numberFormat(@play_time, 2) + 's'
 
@@ -161,13 +168,12 @@ class FL.App
 
 		_.play_audio('/app/audio/da.mp3')
 
-		$('#stage-info, #controller-info').transit_fade_out(=>
-			$('#stage-info .result').hide()
-		)
-		@stage.$dom.removeClass('blur')
+		$('#stage-info, #controller-info').hide()
+		$('#stage-info .result').hide()
 
 		@report_time_count = 1
 		@play_time = 0
+		@nice_count = 0
 
 		@timer = setInterval(@update_timer, 100)
 
@@ -181,13 +187,15 @@ class FL.App
 	pause: ->
 		@is_pause = true
 		$('#stage-info, #controller-info').transit_fade_in()
+		@stage.$dom.addClass('blur')
 		$('#stage-info .tap').text 'Tap to Resume'
 
 	resume: ->
 		@is_pause = false
 		@last_timestamp = Date.now()
 		@last_play_time = Date.now()
-		$('#stage-info, #controller-info').transit_fade_out()
+		$('#stage-info, #controller-info').hide()
+		@stage.$dom.removeClass('blur')
 
 	game_over: ->
 		@is_stop = true
@@ -199,7 +207,6 @@ class FL.App
 
 		$('#stage-info, #controller-info').transit_fade_in()
 		$('#stage-info .result').show()
-		@stage.$dom.addClass('blur')
 
 		@pause()
 
@@ -209,9 +216,10 @@ class FL.App
 			localStorage.setItem('best', @best)
 			$('#stage-info .smiley').text '(´･ω･`)✧'
 		else
-			$('#stage-info .smiley').text '( °Д °;)'
+			$('#stage-info .smiley').text @smiley_list[_.random(@smiley_list.length - 1)]
 
 		$('#stage-info .time').text _.numberFormat(@play_time, 2)
+		$('#stage-info .nice').text @nice_count
 		$('#stage-info .tap').text 'Tap to Restart'
 
 	update: =>
