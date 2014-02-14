@@ -76,8 +76,8 @@ class FL.App
 			if @is_pause
 				return
 			# As time passed, the number of the ammos will increase
-			# y = 7 * log(e, x)
-			n = 7 * Math.log(num) - @stage.count_ammos()
+			# y = 6 * log(e, x)
+			n = 6 * Math.log(num) - @stage.count_ammos()
 			for i in [0...n]
 				@stage.add_child new FL.Ammo
 			num++
