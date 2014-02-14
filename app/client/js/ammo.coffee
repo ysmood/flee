@@ -11,7 +11,7 @@ class FL.Ammo
 		@base_velocity = FL.app.stage.width * 0.2
 
 		# If the ammo is too near to the shuttle, recalculate the position.
-		while true
+		for i in [0...30]
 			@random_props()
 			if _.distance(@, FL.app.shuttle) > @radius * 7
 				break
