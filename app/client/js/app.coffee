@@ -222,8 +222,8 @@ class FL.App
 
 		@pause()
 
-		if @play_time > @best
-			@best = @play_time
+		if @play_time + @nice_count > @best
+			@best = @play_time + @nice_count
 			@$best.text _.numberFormat(@best, 2) + 's'
 			localStorage.setItem('best', @best)
 			$('#stage-info .result').addClass('new_record')
