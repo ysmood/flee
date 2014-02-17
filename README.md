@@ -23,5 +23,5 @@ It's recommanded to use Chrome to play the game. Have fun~
 #### The MIT License (MIT)
 
 
-  [1]: http://ysmood.org:8017/
+  [1]: http://flee.ysmood.org/
   [2]: https://raw.github.com/ysmood/flee/master/docs/img/screenshot.jpg
