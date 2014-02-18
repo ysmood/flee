@@ -2,9 +2,11 @@ module.exports = {
 
 	port: 8013
 
-	modules: []
+	modules: [
+		'Flee.App'
+	]
 
-	db_filename: 'var/NB.db'
+	db_filename: 'var/flee.db'
 
 	lang: 'en'
 
