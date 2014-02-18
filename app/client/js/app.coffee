@@ -120,7 +120,11 @@ class FL.App
 		@$time = $('#display .time')
 		@$ammo_count = $('#display .ammo')
 		@$best = $('#display .best')
-		@best = +localStorage.getItem('best') or 0
+
+		try
+			@best = +localStorage.getItem('best') or 0
+		catch e
+			@best = 0
 
 		@$best.text  _.numberFormat(@best, 2) + 's'
 
@@ -225,7 +229,10 @@ class FL.App
 		if @play_time + @nice_count > @best
 			@best = @play_time + @nice_count
 			@$best.text _.numberFormat(@best, 2) + 's'
-			localStorage.setItem('best', @best)
+			try
+				localStorage.setItem('best', @best)
+			catch e
+				null
 			$('#stage-info .result').addClass('new_record')
 		else
 			$('#stage-info .result').removeClass('new_record')
